@@ -17,6 +17,7 @@ ThemeData _buildLightTheme() {
     buttonColor: caccent,
     scaffoldBackgroundColor: cscaffold,
     cardColor: cwhite,
+    canvasColor: Colors.transparent,
     textSelectionColor: cgrey,
     errorColor: cred,
     buttonTheme: ButtonThemeData(

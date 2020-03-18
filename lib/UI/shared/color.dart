@@ -7,10 +7,10 @@ const cdarkaccent = Color(0xFFE0E0E0);
 const cdarkscaffoldcolor = Color(0xFF363636);
 const cdarkcardcolor = Color(0xFF1c1920);
 
-const cprimaryswatch = const Color(0xFFFFFFFF);
-const cprimary = Color(0xFFFFFFFF);
+const cprimaryswatch = const Color(0xFFAF0000);
+const cprimary = Color(0xFFAF0000);
 const cprofile = Color(0xFF090310);
-const caccent = Color(0xFFAF0000);
+const caccent = Color(0xFFFFFFFF);
 const cscaffold = Color(0xFFEEEEEE);
 const cdisabled = Color(0xFFEFEFEF);
 const cwhite = Color(0xFFFFFFFF);

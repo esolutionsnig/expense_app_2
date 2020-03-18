@@ -25,7 +25,6 @@ class _BuilderPageState extends State<BuilderPage> {
     var userJson = localStorage.getString('user');
     if (userJson != null) {
       user = json.decode(userJson);
-
       setState(() {
         userData = user;
       });
@@ -34,7 +33,6 @@ class _BuilderPageState extends State<BuilderPage> {
 
   @override
   Widget build(BuildContext context) {
-    // return either the Home or Authenticate widget
     if (userData == null) {
       return SignInPage();
     } else {

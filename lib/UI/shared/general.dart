@@ -39,7 +39,7 @@ Widget title(BuildContext context) {
                 style: TextStyle(
                   fontSize: 35.0,
                   fontWeight: FontWeight.w400,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               Text(
@@ -47,13 +47,54 @@ Widget title(BuildContext context) {
                 style: TextStyle(
                   fontSize: 35.0,
                   fontWeight: FontWeight.w400,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ],
           ),
         ),
       ],
+    ),
+  );
+}
+
+// Page Title
+Widget pageTitle(String title) {
+  return Center(
+    child: Padding(
+      padding: EdgeInsets.only(
+        top: 25.0,
+        bottom: 5.0,
+      ),
+      child: Text(
+        title,
+        style: TextStyle(
+          // color: cwhite,
+          fontSize: 24.0,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+  );
+}
+
+// Page Title Bold
+Widget pageHeaderBold(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+      fontSize: 25.0,
+      fontWeight: FontWeight.w700,
+    ),
+  );
+}
+
+// Page Title
+Widget pageHeader(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+      fontSize: 25.0,
     ),
   );
 }

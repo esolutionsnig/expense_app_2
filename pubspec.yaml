@@ -29,6 +29,10 @@ dependencies:
   flutter_spinkit:
   shared_preferences:
   http:
+  truncate:
+  intl:
+  draggable_scrollbar:
+  badges:
 
 dev_dependencies:
   flutter_test:
