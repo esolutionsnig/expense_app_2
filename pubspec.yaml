@@ -29,10 +29,19 @@ dependencies:
   flutter_spinkit:
   shared_preferences:
   http:
+  dio:
+  image_cropper:
+  image_picker:
   truncate:
   intl:
   draggable_scrollbar:
   badges:
+  shimmer:
+  autocomplete_textfield:
+  flutter_uploader:
+  pin_input_text_field:
+  custom_switch:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:

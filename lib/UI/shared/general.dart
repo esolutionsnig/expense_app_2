@@ -78,6 +78,24 @@ Widget pageTitle(String title) {
   );
 }
 
+// Inner Page Title
+Widget innerPageTitle(String title) {
+  return Padding(
+    padding: EdgeInsets.only(
+      top: 15.0,
+      bottom: 5.0,
+    ),
+    child: Text(
+      title,
+      style: TextStyle(
+        // color: cwhite,
+        fontSize: 24.0,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  );
+}
+
 // Page Title Bold
 Widget pageHeaderBold(String title) {
   return Text(

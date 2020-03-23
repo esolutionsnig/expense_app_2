@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _getUserInfo();
+    this._getUserInfo();
     Timer.periodic(Duration(seconds: 30), (timer) {
       _getNotificationCount();
     });
@@ -109,11 +109,11 @@ class _HomePageState extends State<HomePage> {
         //  Set state
         setState(() {
           notificationCount = nots.length;
-          _getRegisteredUsers();
-          _getPettyCash();
-          _getCashAdvance();
-          _getChequeRequisition();
-          _getMessageCount();
+          this._getRegisteredUsers();
+          this._getPettyCash();
+          this._getCashAdvance();
+          this._getChequeRequisition();
+          this._getMessageCount();
         });
       }
     } catch (e) {
@@ -381,6 +381,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 15),
               SizedBox(
                 width: double.infinity,
+                height: 50,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
@@ -476,13 +477,13 @@ class _HomePageState extends State<HomePage> {
         accountName: userData != null
             ? Text(
                 '${userData['surname']} ${userData['firstname']} ${userData['othernames']}',
-                style: TextStyle(color: Theme.of(context).accentColor),
+                style: TextStyle(color: cblack),
               )
             : Text(''),
         accountEmail: userData != null
             ? Text(
                 '${userData['email']}',
-                style: TextStyle(color: Theme.of(context).accentColor),
+                style: TextStyle(color: cblack),
               )
             : Text(''),
         currentAccountPicture: ClipOval(
@@ -1306,8 +1307,11 @@ class _HomePageState extends State<HomePage> {
           actions: actions,
         ),
         drawer: Drawer(
-          child: ListView(
-            children: drawerItems,
+          child: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: ListView(
+              children: drawerItems,
+            ),
           ),
         ),
         body: RefreshIndicator(

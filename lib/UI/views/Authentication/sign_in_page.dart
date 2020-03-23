@@ -159,26 +159,30 @@ class _SignInPageState extends State<SignInPage> {
                             SizedBox(
                               height: 40.0,
                             ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
-                                color: Theme.of(context).primaryColor,
-                                textColor: Theme.of(context).accentColor,
-                                onPressed: em
-                                    ? pa
-                                        ? () async {
-                                            _handleSignIn();
-                                          }
-                                        : null
-                                    : null,
-                                child: Text(
-                                  "Sign In".toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w600,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                  color: Theme.of(context).primaryColor,
+                                  textColor: Theme.of(context).accentColor,
+                                  onPressed: em
+                                      ? pa
+                                          ? () async {
+                                              _handleSignIn();
+                                            }
+                                          : null
+                                      : null,
+                                  child: Text(
+                                    "Sign In".toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
