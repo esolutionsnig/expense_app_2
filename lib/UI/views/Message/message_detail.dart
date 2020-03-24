@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:Expense/UI/shared/color.dart';
-import 'package:Expense/UI/shared/loading.dart';
+import 'package:Expense/UI/shared/loading_transparent.dart';
 import 'package:Expense/core/models/message.dart';
 import 'package:Expense/core/models/message_trail.dart';
 import 'package:Expense/core/services/api.dart';
@@ -40,10 +40,10 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
 
   @override
   void initState() {
-    // super.initState();
+    super.initState();
     _getAllUsers();
     newMsg = widget.userMessage.id;
-    super.initState();
+    // super.initState();
   }
 
   var senderData;
@@ -69,6 +69,7 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
         // print(getSenderAvatarId);
         setState(() {
           senderData = senderItem;
+          fetchUserMessageTrails(newMsg);
         });
       }
     } catch (e) {
@@ -81,43 +82,51 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
     // Retrive data from API
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
-    var user = json.decode(userJson);
+    var userData = json.decode(userJson);
+    var user = userData[0];
+    var userId = user['id'];
 
     recepientId = widget.userMessage.sentBy;
     msgId = widget.userMessage.id;
 
-    if (_formKey.currentState.validate()) {
-      setState(() => _isSending = true);
+    // if (_formKey.currentState.validate()) {
+    print('sending');
+    setState(() {
+      _isSending = true;
+    });
 
-      var data = {
-        'id': msgId,
-        'msg_id': msgId,
-        'user_id': user['id'],
-        'title': ttl + widget.userMessage.title,
-        'message': msgContent,
-        'priority': msgPriority,
-        'sent_by': user['id'],
-        'sent_to': recepientId,
-      };
+    var data = {
+      'id': msgId,
+      'msg_id': msgId,
+      'user_id': userId,
+      'title': ttl + widget.userMessage.title,
+      'message': msgContent,
+      'priority': msgPriority,
+      'sent_by': userId,
+      'sent_to': recepientId,
+    };
+    print('object sent:');
 
-      // Make API call
-      var endPoint = 'usermessages/reply/$msgId';
-      var result = await CallApi().postAuthData(data, endPoint);
-      if (result.statusCode == 201) {
-        var body = json.decode(result.body);
-        var returnedData = body["data"];
-        nuse = returnedData;
-        setState(() {
-          _isSending = false;
-        });
-        _formKey.currentState.reset();
-      } else {
-        setState(() {
-          error = 'Authentication failed, please supply valid credential';
-          _isSending = false;
-        });
-      }
+    // Make API call
+    var endPoint = 'usermessages/reply/$msgId';
+    var result = await CallApi().postAuthData(data, endPoint);
+    print(result.statusCode);
+    if (result.statusCode == 201) {
+      var body = json.decode(result.body);
+      var returnedData = body["data"];
+      nuse = returnedData;
+      setState(() {
+        _isSending = false;
+        _getAllUsers();
+      });
+      _formKey.currentState.reset();
+    } else {
+      setState(() {
+        error = 'Authentication failed, please supply valid credential';
+        _isSending = false;
+      });
     }
+    // }
   }
 
   @override
@@ -223,7 +232,7 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
                             }
                             return snapshot.hasData
                                 ? MessageTrailList(messageTrails: snapshot.data)
-                                : Loading();
+                                : LoadingTransparent();
                           },
                         ),
                       )
@@ -242,10 +251,12 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(48.0),
-                  child: _isSending ? Text(
-                    'Sending message...',
-                    style: TextStyle(color: cwhite, fontSize: 14),
-                  ) : Text(''),
+                  child: _isSending
+                      ? Text(
+                          'Sending message...',
+                          style: TextStyle(color: cwhite, fontSize: 14),
+                        )
+                      : Text(''),
                 ),
               ],
             ),
@@ -290,13 +301,9 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
                     IconButton(
                       icon: Icon(
                         Icons.send,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).primaryColor,
                       ),
-                      onPressed: () {
-                        if(_formKey.currentState.validate()) {
-                          _sendMessageToUser();
-                        }
-                      },
+                      onPressed: _sendMessageToUser,
                     ),
                   ],
                 ),

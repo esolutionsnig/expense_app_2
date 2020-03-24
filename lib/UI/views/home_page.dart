@@ -7,9 +7,7 @@ import 'package:Expense/UI/shared/roles.dart';
 import 'package:Expense/UI/views/Authentication/sign_in_page.dart';
 import 'package:Expense/UI/views/CashAdvanced/cash_advance.dart';
 import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition.dart';
-import 'package:Expense/UI/views/Contact/contact.dart';
 import 'package:Expense/UI/views/ContactSupport/contact_support.dart';
-import 'package:Expense/UI/views/Message/message.dart';
 import 'package:Expense/UI/views/Notification/notification.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash_hod.dart';
@@ -113,7 +111,7 @@ class _HomePageState extends State<HomePage> {
           this._getPettyCash();
           this._getCashAdvance();
           this._getChequeRequisition();
-          this._getMessageCount();
+          // this._getMessageCount();
         });
       }
     } catch (e) {
@@ -139,23 +137,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Get Messages
-  Future<Null> _getMessageCount() async {
-    var endPoint = 'usermessages/unread/user/$userId';
-    try {
-      // Make API call
-      var res = await CallApi().getAuthData(endPoint);
-      if (res.statusCode == 200) {
-        var body = json.decode(res.body);
-        var nots = body["data"].toList();
-        //  Set state
-        setState(() {
-          mxgCounta = nots.length;
-        });
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  // Future<Null> _getMessageCount() async {
+  //   var endPoint = 'usermessages/unread/user/$userId';
+  //   try {
+  //     // Make API call
+  //     var res = await CallApi().getAuthData(endPoint);
+  //     if (res.statusCode == 200) {
+  //       var body = json.decode(res.body);
+  //       var nots = body["data"].toList();
+  //       //  Set state
+  //       setState(() {
+  //         mxgCounta = nots.length;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
 
   // Get notification count
   Future<Null> _getPettyCash() async {
@@ -251,7 +249,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 400.0,
+          height: 600.0,
           decoration: BoxDecoration(
             color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.only(
@@ -423,26 +421,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // AppBar Actions
     List<Widget> actions = List();
-    actions.add(
-      Badge(
-        position: BadgePosition.topRight(top: 10, right: 6),
-        badgeContent: Text(
-          '$mxgCounta',
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
-        badgeColor: Theme.of(context).accentColor,
-        child: IconButton(
-            padding: EdgeInsets.only(top: 22, right: 15),
-            icon: Icon(
-              Icons.message,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => MessageScreen()));
-            }),
-      ),
-    );
+    // actions.add(
+    //   Badge(
+    //     position: BadgePosition.topRight(top: 10, right: 6),
+    //     badgeContent: Text(
+    //       '$mxgCounta',
+    //       style: TextStyle(color: Theme.of(context).primaryColor),
+    //     ),
+    //     badgeColor: Theme.of(context).accentColor,
+    //     child: IconButton(
+    //         padding: EdgeInsets.only(top: 22, right: 15),
+    //         icon: Icon(
+    //           Icons.message,
+    //           size: 30,
+    //         ),
+    //         onPressed: () {
+    //           Navigator.of(context).push(
+    //               MaterialPageRoute(builder: (context) => MessageScreen()));
+    //         }),
+    //   ),
+    // );
     actions.add(
       Badge(
         position: BadgePosition.topRight(top: 10, right: 6),
@@ -518,24 +516,24 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context) => ProfileScreen()));
         },
       ),
-      ListTile(
-        leading: Icon(Icons.contacts),
-        title: Text('Registered Staff'),
-        onTap: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => MyContactScreen()));
-        },
-      ),
-      ListTile(
-        leading: Icon(Icons.message),
-        title: Text('Message'),
-        onTap: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => MessageScreen()));
-        },
-      ),
+      // ListTile(
+      //   leading: Icon(Icons.contacts),
+      //   title: Text('Registered Staff'),
+      //   onTap: () {
+      //     Navigator.of(context).pop();
+      //     Navigator.of(context).push(MaterialPageRoute(
+      //         builder: (BuildContext context) => MyContactScreen()));
+      //   },
+      // ),
+      // ListTile(
+      //   leading: Icon(Icons.message),
+      //   title: Text('Message'),
+      //   onTap: () {
+      //     Navigator.of(context).pop();
+      //     Navigator.of(context).push(MaterialPageRoute(
+      //         builder: (BuildContext context) => MessageScreen()));
+      //   },
+      // ),
       ListTile(
         leading: Icon(Icons.notifications),
         title: Text('Notification'),

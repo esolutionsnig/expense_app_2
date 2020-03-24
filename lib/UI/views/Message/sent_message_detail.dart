@@ -194,7 +194,7 @@ class _SentMessageDetailScreenState extends State<SentMessageDetailScreen> {
                   IconButton(
                     icon: Icon(
                       Icons.send,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                     onPressed: () {},
                   ),

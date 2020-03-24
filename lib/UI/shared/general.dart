@@ -1,3 +1,4 @@
+import 'package:Expense/UI/shared/color.dart';
 import 'package:flutter/material.dart';
 
 // Header Image
@@ -113,6 +114,50 @@ Widget pageHeader(String title) {
     title,
     style: TextStyle(
       fontSize: 25.0,
+    ),
+  );
+}
+
+// Dialog subtitle
+Widget dialogTitle(String subtitle) {
+  return Text(
+    subtitle,
+    style: TextStyle(
+      color: cgrey,
+      fontSize: 12.8
+    ),
+  );
+}
+
+// Dialog subtitle
+Widget dialogSubTitle(String subtitle) {
+  return Text(
+    subtitle,
+    style: TextStyle(
+      color: cblack,
+      fontSize: 14.8
+    ),
+  );
+}
+
+// Dialog subtitle
+Widget dialogSubTitleAmount(String subtitle) {
+  return Text(
+    subtitle,
+    style: TextStyle(
+      color: cblack,
+      fontSize: 18.8
+    ),
+  );
+}
+
+// Cash Detail Page Title Bold
+Widget cashDetailpageHeader(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.w600,
     ),
   );
 }
