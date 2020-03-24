@@ -10,6 +10,7 @@ import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition.dart';
 import 'package:Expense/UI/views/ContactSupport/contact_support.dart';
 import 'package:Expense/UI/views/Notification/notification.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash.dart';
+import 'package:Expense/UI/views/PettyCash/petty_cash_ermc.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash_hod.dart';
 import 'package:Expense/UI/views/Profile/profile.dart';
 import 'package:Expense/core/services/api.dart';
@@ -679,7 +680,8 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
+                        builder: (BuildContext context) =>
+                            PettyCashErmcScreen()));
                   },
                 ),
                 ListTile(
@@ -722,9 +724,12 @@ class _HomePageState extends State<HomePage> {
                       title: Text('Petty Cash Approval'),
                       onTap: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                PettyCashScreen()));
+                                PettyCashErmcScreen(),
+                          ),
+                        );
                       },
                     ),
                     ListTile(

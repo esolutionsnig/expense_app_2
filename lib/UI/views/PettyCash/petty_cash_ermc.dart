@@ -1,24 +1,23 @@
+import 'dart:convert';
+
 import 'package:Expense/UI/shared/color.dart';
 import 'package:Expense/UI/shared/general.dart';
 import 'package:Expense/UI/shared/loading.dart';
-import 'package:Expense/core/models/petty_cash_approval_hod.dart';
+import 'package:Expense/core/models/petty_cash_approval_ermc.dart';
 import 'package:Expense/core/services/api.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truncate/truncate.dart';
 
-class PettyCashApprovalHodScreen extends StatefulWidget {
+class PettyCashErmcScreen extends StatefulWidget {
   @override
-  _PettyCashApprovalHodScreenState createState() =>
-      _PettyCashApprovalHodScreenState();
+  _PettyCashErmcScreenState createState() => _PettyCashErmcScreenState();
 }
 
-class _PettyCashApprovalHodScreenState
-    extends State<PettyCashApprovalHodScreen> {
+class _PettyCashErmcScreenState extends State<PettyCashErmcScreen> {
   final egoFormata = new NumberFormat("#,##0.00", "en_NG");
 
   bool loading = false;
@@ -47,7 +46,7 @@ class _PettyCashApprovalHodScreenState
       String paymentComment,
       String paymentStatus,
       String description,
-      PettyCashDataHod pcData) {
+      PettyCashDataErmc pcData) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -205,7 +204,7 @@ class _PettyCashApprovalHodScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Petty Cash'),
+        title: innerPageTitle('Petty Cash'),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 0.0 : 0.0,
       ),
       body: Stack(
@@ -223,7 +222,7 @@ class _PettyCashApprovalHodScreenState
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Head Of Department Approval",
+                  "ERM&C Approval",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
@@ -234,12 +233,14 @@ class _PettyCashApprovalHodScreenState
             ),
           ),
           Container(
-            decoration:
-                BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
+            margin: EdgeInsets.only(top: 65.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
             child: Padding(
               padding: EdgeInsets.all(0.0),
               child: FutureBuilder(
-                future: fetchPettyCashApprovalHod(),
+                future: fetchPettyCashApprovalErmc(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error);
@@ -417,17 +418,17 @@ class _ApprovalPageState extends State<ApprovalPage> {
       var data = {
         'expense_id': pettyCashId,
         'approved_amount': approvedAmount,
-        'hod_approval': isApproved,
-        'hod_comment': hodComment,
+        'ermc_approval': isApproved,
+        'ermc_comment': hodComment,
       };
 
       // Make API call
-      var endPoint = 'expenses/user/$userId/hod';
+      var endPoint = 'expenses/user/$userId/ermc';
       var result = await CallApi().putAuthData(data, endPoint);
       if (result.statusCode == 201) {
         if (this.mounted) {
           setState(() {
-            fetchPettyCashApprovalHod();
+            fetchPettyCashApprovalErmc();
             loading = false;
             Navigator.of(context).pop();
           });
@@ -445,10 +446,10 @@ class _ApprovalPageState extends State<ApprovalPage> {
 
   @override
   Widget build(BuildContext context) {
-    final PettyCashDataHod pcData = ModalRoute.of(context).settings.arguments;
+    final PettyCashDataErmc pcData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Approved requests'),
+        title: Text('Approve request'),
       ),
       body: ListView(
         children: <Widget>[
@@ -494,7 +495,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                       ),
                                     ),
                                     Text(
-                                      "N${egoFormata.format(pcData.totalAmount)}",
+                                      "N${egoFormata.format(pcData.approvedAmount)}",
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         color: Theme.of(context).primaryColor,
