@@ -6,10 +6,12 @@ import 'package:Expense/UI/shared/general.dart';
 import 'package:Expense/UI/shared/roles.dart';
 import 'package:Expense/UI/views/Authentication/sign_in_page.dart';
 import 'package:Expense/UI/views/CashAdvanced/cash_advance.dart';
+import 'package:Expense/UI/views/CashAdvanced/cash_advance_hod.dart';
 import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition.dart';
 import 'package:Expense/UI/views/ContactSupport/contact_support.dart';
 import 'package:Expense/UI/views/Notification/notification.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash.dart';
+import 'package:Expense/UI/views/PettyCash/petty_cash_cs.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash_ermc.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash_hod.dart';
 import 'package:Expense/UI/views/Profile/profile.dart';
@@ -389,14 +391,26 @@ class _HomePageState extends State<HomePage> {
                   textColor: Theme.of(context).accentColor,
                   onPressed: () {
                     if (title == "Petty Cash") {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PettyCashScreen()));
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PettyCashScreen(),
+                        ),
+                      );
                     } else if (title == "Cash Advance") {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CashAdvanceScreen()));
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CashAdvanceScreen(),
+                        ),
+                      );
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ChequeRequisitionScreen()));
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ChequeRequisitionScreen(),
+                        ),
+                      );
                     }
                   },
                   child: Text(
@@ -615,7 +629,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => PettyCashScreen()));
+                  builder: (BuildContext context) => CashAdvanceHodScreen()));
             },
           ),
         ],
@@ -763,7 +777,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => PettyCashScreen()));
+                    builder: (BuildContext context) => PettyCashCsScreen()));
               },
             )
           : userRole == csOfficer
@@ -773,120 +787,9 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
+                        builder: (BuildContext context) =>
+                            PettyCashCsScreen()));
                   },
-                )
-              : Row(),
-      // FINCON
-      userRole == financeExecutive
-          ? ExpansionTile(
-              title: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 42.0),
-                    child: Text(' '),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text('Finance'),
-                  ),
-                ],
-              ),
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.check),
-                  title: Text('Petty Cash Approval'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.done_all),
-                  title: Text('Petty Cash Payment'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.done_all),
-                  title: Text('Cash Advance Payment'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.done_all),
-                  title: Text('Cheque Requisition Payment'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-              ],
-            )
-          : userRole == financeOfficer
-              ? ExpansionTile(
-                  title: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 42.0),
-                        child: Text(' '),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text('Finance'),
-                      ),
-                    ],
-                  ),
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.check),
-                      title: Text('Petty Cash Approval'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.done_all),
-                      title: Text('Petty Cash Payment'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.done_all),
-                      title: Text('Cash Advance Payment'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.done_all),
-                      title: Text('Cheque Requisition Payment'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                  ],
                 )
               : Row(),
       // Managing Director

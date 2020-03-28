@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:Expense/core/services/api.dart';
 
-class PettyCashDataErmc {
+class PettyCashDataCs {
   int id;
   int userId;
   String title;
@@ -26,7 +26,7 @@ class PettyCashDataErmc {
   String description;
 
   // Constructor
-  PettyCashDataErmc(
+  PettyCashDataCs(
       {this.amountPaid,
       this.approvedAmount,
       this.concludedOn,
@@ -50,8 +50,8 @@ class PettyCashDataErmc {
       this.userId});
 
   // Static Method
-  factory PettyCashDataErmc.fromJson(Map<String, dynamic> json) {
-    return PettyCashDataErmc(
+  factory PettyCashDataCs.fromJson(Map<String, dynamic> json) {
+    return PettyCashDataCs(
         amountPaid: json["amount_paid"],
         approvedAmount: json["approved_amount"],
         concludedOn: json["concluded_on"],
@@ -77,9 +77,9 @@ class PettyCashDataErmc {
 }
 
 // Fetch data from API
-Future<List<PettyCashDataErmc>> fetchPettyCashApprovalErmc() async {
+Future<List<PettyCashDataCs>> fetchPettyCashApprovalCs() async {
   var listOfPettyCash;
-  var endPoint = 'expenses/user/approvals/ermc'; 
+  var endPoint = 'expenses/user/approvals/cs'; 
   
   try {
     // Make an API call 
@@ -88,8 +88,8 @@ Future<List<PettyCashDataErmc>> fetchPettyCashApprovalErmc() async {
       Map<String, dynamic> mapResult = json.decode(result.body);
       final pcs = mapResult["data"].cast<Map<String, dynamic>>();
       // Get list of petty cash
-      final listOfPettyCash = await pcs.map<PettyCashDataErmc>((json) {
-        return PettyCashDataErmc.fromJson(json);
+      final listOfPettyCash = await pcs.map<PettyCashDataCs>((json) {
+        return PettyCashDataCs.fromJson(json);
       }).toList();
       return listOfPettyCash;
     } else {

@@ -1,52 +1,31 @@
-import 'dart:convert';
-
 import 'package:Expense/UI/shared/color.dart';
 import 'package:Expense/UI/shared/general.dart';
 import 'package:Expense/UI/shared/loading.dart';
-import 'package:Expense/core/models/petty_cash_approval_cs.dart';
+import 'package:Expense/core/models/cash_advance_hod.dart';
 import 'package:Expense/core/services/api.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truncate/truncate.dart';
 
-class PettyCashCsScreen extends StatefulWidget {
+class CashAdvanceHodScreen extends StatefulWidget {
   @override
-  _PettyCashCsScreenState createState() => _PettyCashCsScreenState();
+  _CashAdvanceHodScreenState createState() =>
+      _CashAdvanceHodScreenState();
 }
 
-class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
+class _CashAdvanceHodScreenState
+    extends State<CashAdvanceHodScreen> {
   final egoFormata = new NumberFormat("#,##0.00", "en_NG");
 
   bool loading = false;
 
-  // Show Petty Cash Sheet
+  // Show Cash Advance Sheet
   _showPettyCashModalBottomSheet(
-      context,
-      int id,
-      int userId,
-      String title,
-      String transactionDate,
-      String transactionNumber,
-      int totalAmount,
-      int approvedAmount,
-      int amountPaid,
-      String hodApproval,
-      String hodComment,
-      String ermcApproval,
-      String ermcComment,
-      String corporateServicesApproval,
-      String corporateServicesComment,
-      String isConcluded,
-      String concludedOn,
-      String isPaid,
-      String paidOn,
-      String paymentComment,
-      String paymentStatus,
-      String description,
-      PettyCashDataCs pcData) {
+      context, CashAdvanceDataHod data) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -62,88 +41,93 @@ class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
           child: ListView(
             padding: const EdgeInsets.all(15),
             children: <Widget>[
-              pageTitle(title),
+              pageTitle(data.title),
               Divider(),
               Container(
                 child: Column(
                   children: <Widget>[
                     ListTile(
                       title: dialogTitle("Transaction Date:"),
-                      subtitle: dialogSubTitle("$transactionDate"),
+                      subtitle: dialogSubTitle(data.transactionDate),
                     ),
                     ListTile(
                       title: dialogTitle("Transaction Number:"),
-                      subtitle: dialogSubTitle("$transactionNumber"),
+                      subtitle:
+                          dialogSubTitle(data.transactionNumber),
                     ),
                     ListTile(
                       title: dialogTitle("HOD Approval:"),
-                      subtitle: hodApproval == "YES"
+                      subtitle: data.hodApproval == "YES"
                           ? dialogSubTitle("HOD has approved your request.")
                           : dialogSubTitle(
                               "HOD is yet to approve your request."),
                     ),
                     ListTile(
                       title: dialogTitle("HOD Comment:"),
-                      subtitle: hodComment != null
-                          ? dialogSubTitle("$hodComment")
+                      subtitle: data.hodComment != null
+                          ? dialogSubTitle(data.hodComment)
                           : Text(''),
                     ),
                     ListTile(
                       title: dialogTitle("ERMC Approval:"),
-                      subtitle: ermcApproval == "YES"
+                      subtitle: data.ermcApproval == "YES"
                           ? dialogSubTitle("ERMC has approved your request.")
                           : dialogSubTitle(
                               "ERMC is yet to approve your request"),
                     ),
                     ListTile(
-                        title: dialogTitle("ERMC Comment:"),
-                        subtitle: ermcComment != null
-                            ? dialogSubTitle("$ermcComment")
-                            : Text('')),
-                    ListTile(
-                      title: dialogTitle("Corporate Services Approval:"),
-                      subtitle: corporateServicesApproval == "YES"
-                          ? dialogSubTitle(
-                              "Corporate services has approved your request.")
-                          : dialogSubTitle(
-                              "Corporate services is yet to approve your request"),
+                      title: dialogTitle("ERMC Comment:"),
+                      subtitle: data.ermcComment != null
+                          ? dialogSubTitle(data.ermcComment)
+                          : Text(''),
                     ),
                     ListTile(
-                        title: dialogTitle("Corporate Services Comment:"),
-                        subtitle: corporateServicesComment != null
-                            ? dialogSubTitle("$ermcComment")
+                      title: dialogTitle("Managing Director's Approval:"),
+                      subtitle: data.mdApproval == "YES"
+                          ? dialogSubTitle(
+                              "Managing director's has approved your request.")
+                          : dialogSubTitle(
+                              "Managing director's is yet to approve your request"),
+                    ),
+                    ListTile(
+                        title: dialogTitle("Managing Director's Comment:"),
+                        subtitle: data.mdComment != null
+                            ? dialogSubTitle(data.ermcComment)
                             : Text('')),
                     ListTile(
                       title: dialogTitle("Payment Status:"),
-                      subtitle: dialogSubTitle("$paymentStatus"),
+                      subtitle: dialogSubTitle(data.paymentStatus),
                     ),
                     ListTile(
                       title: dialogTitle("Payment Comment:"),
-                      subtitle: dialogSubTitle("$paymentComment"),
+                      subtitle: data.paymentComment != null
+                          ? dialogSubTitle(data.paymentComment)
+                          : Text(''),
                     ),
                     ListTile(
-                        title: dialogTitle("Paid On:"),
-                        subtitle: paidOn != null
-                            ? dialogSubTitle("$paidOn")
-                            : Text('')),
+                      title: dialogTitle("Paid On:"),
+                      subtitle: data.payedOn != null
+                          ? dialogSubTitle(data.payedOn)
+                          : Text(''),
+                    ),
                     ListTile(
                       title: dialogTitle("Description:"),
-                      subtitle: dialogSubTitle("$description"),
+                      subtitle: dialogSubTitle(data.purpose),
                     ),
                     ListTile(
                       title: dialogTitle("Amount Requested:"),
                       subtitle: dialogSubTitleAmount(
-                          "N${egoFormata.format(totalAmount)}"),
+                          "N${egoFormata.format(data.amount)}"),
                     ),
                     ListTile(
                       title: dialogTitle("Amount Approved:"),
                       subtitle: dialogSubTitleAmount(
-                          "N${egoFormata.format(approvedAmount)}"),
+                          "N${egoFormata.format(data.approvedAmount)}"),
                     ),
                     ListTile(
                       title: dialogTitle("Amount Paid:"),
                       subtitle: dialogSubTitleAmount(
-                          "N${egoFormata.format(amountPaid)}"),
+                          "N${egoFormata.format(data.amountPaid)}"),
                     ),
                   ],
                 ),
@@ -175,7 +159,7 @@ class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
                         MaterialPageRoute(
                           builder: (context) => ApprovalPage(),
                           settings: RouteSettings(
-                            arguments: pcData,
+                            arguments: data,
                           ),
                         ),
                       );
@@ -204,7 +188,7 @@ class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: innerPageTitle('Petty Cash'),
+        title: Text('Cash Advance'),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 0.0 : 0.0,
       ),
       body: Stack(
@@ -222,7 +206,7 @@ class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Corporate Services Approval",
+                  "Head Of Department Approval",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
@@ -233,14 +217,12 @@ class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 65.0),
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-            ),
+            decoration:
+                BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
             child: Padding(
               padding: EdgeInsets.all(0.0),
               child: FutureBuilder(
-                future: fetchPettyCashApprovalCs(),
+                future: fetchCashAdvanceHod(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error);
@@ -276,7 +258,7 @@ class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
                                             ),
                                             title: Text('${pcData.title}'),
                                             subtitle: Text(
-                                              truncate(pcData.description, 50,
+                                              truncate(pcData.purpose, 50,
                                                   omission: '...',
                                                   position:
                                                       TruncatePosition.end),
@@ -296,32 +278,7 @@ class _PettyCashCsScreenState extends State<PettyCashCsScreen> {
                                                           : corange),
                                             ),
                                             onTap: () {
-                                              _showPettyCashModalBottomSheet(
-                                                  context,
-                                                  pcData.id,
-                                                  pcData.userId,
-                                                  pcData.title,
-                                                  pcData.transactionDate,
-                                                  pcData.transactionNumber,
-                                                  pcData.totalAmount,
-                                                  pcData.approvedAmount,
-                                                  pcData.amountPaid,
-                                                  pcData.hodApproval,
-                                                  pcData.hodComment,
-                                                  pcData.ermcApproval,
-                                                  pcData.ermcComment,
-                                                  pcData
-                                                      .corporateServicesApproval,
-                                                  pcData
-                                                      .corporateServicesComment,
-                                                  pcData.isConcluded,
-                                                  pcData.concludedOn,
-                                                  pcData.isPaid,
-                                                  pcData.paidOn,
-                                                  pcData.paymentComment,
-                                                  pcData.paymentStatus,
-                                                  pcData.description,
-                                                  pcData);
+                                              _showPettyCashModalBottomSheet(context, pcData);
                                             },
                                           ),
                                         )
@@ -390,17 +347,9 @@ class _ApprovalPageState extends State<ApprovalPage> {
     }
   }
 
-  String validateAmount(String value) {
-    if (int.parse(value) < 3) {
-      return 'Amount can not be more than 10,000';
-    } else {
-      return null;
-    }
-  }
-
   // Approve staff request
-  void _approveStaffRequest(int pettyCashId) async {
-    // if (_formKey.currentState.validate()) {
+  void _approveStaffRequest(int id) async {
+    if (_formKey.currentState.validate()) {
       String isApproved = 'NO';
       if (this.mounted) {
         setState(() => loading = true);
@@ -416,19 +365,19 @@ class _ApprovalPageState extends State<ApprovalPage> {
       }
 
       var data = {
-        'expense_id': pettyCashId,
+        'cashadvance_id': id,
         'approved_amount': approvedAmount,
-        'approved': isApproved,
-        'approval_comment': hodComment,
+        'hod_approval': isApproved,
+        'hod_comment': hodComment,
       };
 
       // Make API call
-      var endPoint = 'expenses/user/$userId/final';
+      var endPoint = 'cashadvances/user/$userId/hod';
       var result = await CallApi().putAuthData(data, endPoint);
       if (result.statusCode == 201) {
         if (this.mounted) {
           setState(() {
-            fetchPettyCashApprovalCs();
+            fetchCashAdvanceHod();
             loading = false;
             Navigator.of(context).pop();
           });
@@ -441,19 +390,19 @@ class _ApprovalPageState extends State<ApprovalPage> {
           });
         }
       }
-    // }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final PettyCashDataCs pcData = ModalRoute.of(context).settings.arguments;
+    final CashAdvanceDataHod pcData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Approve request'),
+        title: Text('Approve requests'),
       ),
       body: ListView(
         children: <Widget>[
-          // Petty Cash
+          // Cash Advance
           Container(
             padding: EdgeInsets.all(12.0),
             child: Card(
@@ -495,7 +444,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                       ),
                                     ),
                                     Text(
-                                      "N${egoFormata.format(pcData.approvedAmount)}",
+                                      "N${egoFormata.format(pcData.amount)}",
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         color: Theme.of(context).primaryColor,
@@ -673,7 +622,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                           onPressed: () {
                             _approveStaffRequest(pcData.id);
                           },
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -681,7 +630,6 @@ class _ApprovalPageState extends State<ApprovalPage> {
               ),
             ),
           ),
-
           SizedBox(
             height: 20.0,
           )

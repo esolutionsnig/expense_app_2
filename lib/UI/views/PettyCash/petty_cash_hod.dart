@@ -24,30 +24,7 @@ class _PettyCashApprovalHodScreenState
   bool loading = false;
 
   // Show Petty Cash Sheet
-  _showPettyCashModalBottomSheet(
-      context,
-      int id,
-      int userId,
-      String title,
-      String transactionDate,
-      String transactionNumber,
-      int totalAmount,
-      int approvedAmount,
-      int amountPaid,
-      String hodApproval,
-      String hodComment,
-      String ermcApproval,
-      String ermcComment,
-      String corporateServicesApproval,
-      String corporateServicesComment,
-      String isConcluded,
-      String concludedOn,
-      String isPaid,
-      String paidOn,
-      String paymentComment,
-      String paymentStatus,
-      String description,
-      PettyCashDataHod pcData) {
+  _showPettyCashModalBottomSheet(context, PettyCashDataHod data) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -63,47 +40,48 @@ class _PettyCashApprovalHodScreenState
           child: ListView(
             padding: const EdgeInsets.all(15),
             children: <Widget>[
-              pageTitle(title),
+              pageTitle(data.title),
               Divider(),
               Container(
                 child: Column(
                   children: <Widget>[
                     ListTile(
                       title: dialogTitle("Transaction Date:"),
-                      subtitle: dialogSubTitle("$transactionDate"),
+                      subtitle: dialogSubTitle(data.transactionDate),
                     ),
                     ListTile(
                       title: dialogTitle("Transaction Number:"),
-                      subtitle: dialogSubTitle("$transactionNumber"),
+                      subtitle: dialogSubTitle(data.transactionNumber),
                     ),
                     ListTile(
                       title: dialogTitle("HOD Approval:"),
-                      subtitle: hodApproval == "YES"
+                      subtitle: data.hodApproval == "YES"
                           ? dialogSubTitle("HOD has approved your request.")
                           : dialogSubTitle(
                               "HOD is yet to approve your request."),
                     ),
                     ListTile(
                       title: dialogTitle("HOD Comment:"),
-                      subtitle: hodComment != null
-                          ? dialogSubTitle("$hodComment")
+                      subtitle: data.hodComment != null
+                          ? dialogSubTitle(data.hodComment)
                           : Text(''),
                     ),
                     ListTile(
                       title: dialogTitle("ERMC Approval:"),
-                      subtitle: ermcApproval == "YES"
+                      subtitle: data.ermcApproval == "YES"
                           ? dialogSubTitle("ERMC has approved your request.")
                           : dialogSubTitle(
                               "ERMC is yet to approve your request"),
                     ),
                     ListTile(
-                        title: dialogTitle("ERMC Comment:"),
-                        subtitle: ermcComment != null
-                            ? dialogSubTitle("$ermcComment")
-                            : Text('')),
+                      title: dialogTitle("ERMC Comment:"),
+                      subtitle: data.ermcComment != null
+                          ? dialogSubTitle(data.ermcComment)
+                          : Text(''),
+                    ),
                     ListTile(
                       title: dialogTitle("Corporate Services Approval:"),
-                      subtitle: corporateServicesApproval == "YES"
+                      subtitle: data.corporateServicesApproval == "YES"
                           ? dialogSubTitle(
                               "Corporate services has approved your request.")
                           : dialogSubTitle(
@@ -111,40 +89,42 @@ class _PettyCashApprovalHodScreenState
                     ),
                     ListTile(
                         title: dialogTitle("Corporate Services Comment:"),
-                        subtitle: corporateServicesComment != null
-                            ? dialogSubTitle("$ermcComment")
+                        subtitle: data.corporateServicesComment != null
+                            ? dialogSubTitle(data.ermcComment)
                             : Text('')),
                     ListTile(
                       title: dialogTitle("Payment Status:"),
-                      subtitle: dialogSubTitle("$paymentStatus"),
+                      subtitle: dialogSubTitle(data.paymentStatus),
                     ),
                     ListTile(
                       title: dialogTitle("Payment Comment:"),
-                      subtitle: dialogSubTitle("$paymentComment"),
+                      subtitle: data.paymentComment != null
+                          ? dialogSubTitle(data.paymentComment)
+                          : Text(""),
                     ),
                     ListTile(
                         title: dialogTitle("Paid On:"),
-                        subtitle: paidOn != null
-                            ? dialogSubTitle("$paidOn")
+                        subtitle: data.paidOn != null
+                            ? dialogSubTitle(data.paidOn)
                             : Text('')),
                     ListTile(
                       title: dialogTitle("Description:"),
-                      subtitle: dialogSubTitle("$description"),
+                      subtitle: dialogSubTitle(data.description),
                     ),
                     ListTile(
                       title: dialogTitle("Amount Requested:"),
                       subtitle: dialogSubTitleAmount(
-                          "N${egoFormata.format(totalAmount)}"),
+                          "N${egoFormata.format(data.totalAmount)}"),
                     ),
                     ListTile(
                       title: dialogTitle("Amount Approved:"),
                       subtitle: dialogSubTitleAmount(
-                          "N${egoFormata.format(approvedAmount)}"),
+                          "N${egoFormata.format(data.approvedAmount)}"),
                     ),
                     ListTile(
                       title: dialogTitle("Amount Paid:"),
                       subtitle: dialogSubTitleAmount(
-                          "N${egoFormata.format(amountPaid)}"),
+                          "N${egoFormata.format(data.amountPaid)}"),
                     ),
                   ],
                 ),
@@ -176,7 +156,7 @@ class _PettyCashApprovalHodScreenState
                         MaterialPageRoute(
                           builder: (context) => ApprovalPage(),
                           settings: RouteSettings(
-                            arguments: pcData,
+                            arguments: data,
                           ),
                         ),
                       );
@@ -296,31 +276,7 @@ class _PettyCashApprovalHodScreenState
                                             ),
                                             onTap: () {
                                               _showPettyCashModalBottomSheet(
-                                                  context,
-                                                  pcData.id,
-                                                  pcData.userId,
-                                                  pcData.title,
-                                                  pcData.transactionDate,
-                                                  pcData.transactionNumber,
-                                                  pcData.totalAmount,
-                                                  pcData.approvedAmount,
-                                                  pcData.amountPaid,
-                                                  pcData.hodApproval,
-                                                  pcData.hodComment,
-                                                  pcData.ermcApproval,
-                                                  pcData.ermcComment,
-                                                  pcData
-                                                      .corporateServicesApproval,
-                                                  pcData
-                                                      .corporateServicesComment,
-                                                  pcData.isConcluded,
-                                                  pcData.concludedOn,
-                                                  pcData.isPaid,
-                                                  pcData.paidOn,
-                                                  pcData.paymentComment,
-                                                  pcData.paymentStatus,
-                                                  pcData.description,
-                                                  pcData);
+                                                  context, pcData);
                                             },
                                           ),
                                         )
@@ -448,7 +404,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     final PettyCashDataHod pcData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Approved requests'),
+        title: Text('Approve requests'),
       ),
       body: ListView(
         children: <Widget>[
