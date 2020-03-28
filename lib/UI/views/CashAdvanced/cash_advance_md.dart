@@ -1,7 +1,7 @@
 import 'package:Expense/UI/shared/color.dart';
 import 'package:Expense/UI/shared/general.dart';
 import 'package:Expense/UI/shared/loading.dart';
-import 'package:Expense/core/models/cash_advance_hod.dart';
+import 'package:Expense/core/models/cash_advance_md.dart';
 import 'package:Expense/core/services/api.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/foundation.dart';
@@ -11,21 +11,21 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truncate/truncate.dart';
 
-class CashAdvanceHodScreen extends StatefulWidget {
+class CashAdvanceMdScreen extends StatefulWidget {
   @override
-  _CashAdvanceHodScreenState createState() =>
-      _CashAdvanceHodScreenState();
+  _CashAdvanceMdScreenState createState() =>
+      _CashAdvanceMdScreenState();
 }
 
-class _CashAdvanceHodScreenState
-    extends State<CashAdvanceHodScreen> {
+class _CashAdvanceMdScreenState
+    extends State<CashAdvanceMdScreen> {
   final egoFormata = new NumberFormat("#,##0.00", "en_NG");
 
   bool loading = false;
 
   // Show Cash Advance Sheet
   _showPettyCashModalBottomSheet(
-      context, CashAdvanceDataHod data) {
+      context, CashAdvanceDataMd data) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -206,7 +206,7 @@ class _CashAdvanceHodScreenState
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Head Of Department Approval",
+                  "Managing Director's Approval",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
@@ -223,7 +223,7 @@ class _CashAdvanceHodScreenState
             child: Padding(
               padding: EdgeInsets.all(0.0),
               child: FutureBuilder(
-                future: fetchCashAdvanceHod(),
+                future: fetchCashAdvanceMd(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error);
@@ -368,17 +368,17 @@ class _ApprovalPageState extends State<ApprovalPage> {
       var data = {
         'cashadvance_id': id,
         'approved_amount': approvedAmount,
-        'hod_approval': isApproved,
-        'hod_comment': hodComment,
+        'md_approval': isApproved,
+        'md_comment': hodComment,
       };
 
       // Make API call
-      var endPoint = 'cashadvances/user/$userId/hod';
+      var endPoint = 'cashadvances/user/$userId/md';
       var result = await CallApi().putAuthData(data, endPoint);
       if (result.statusCode == 201) {
         if (this.mounted) {
           setState(() {
-            fetchCashAdvanceHod();
+            fetchCashAdvanceMd();
             loading = false;
             Navigator.of(context).pop();
           });
@@ -386,7 +386,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
       } else {
         if (this.mounted) {
           setState(() {
-            error = 'Request failed, please supply valid credential';
+            error = 'Request failed, please supply valid credentials';
             loading = false;
           });
         }
@@ -396,7 +396,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
 
   @override
   Widget build(BuildContext context) {
-    final CashAdvanceDataHod pcData = ModalRoute.of(context).settings.arguments;
+    final CashAdvanceDataMd pcData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text('Approve requests'),
@@ -438,14 +438,14 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
-                                      "The requested amount is: ",
+                                      "ERM&C approved: ",
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Colors.black,
                                       ),
                                     ),
                                     Text(
-                                      "N${egoFormata.format(pcData.amount)}",
+                                      "N${egoFormata.format(pcData.approvedAmount)}",
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         color: Theme.of(context).primaryColor,

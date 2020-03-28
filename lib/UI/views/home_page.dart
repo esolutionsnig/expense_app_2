@@ -6,7 +6,9 @@ import 'package:Expense/UI/shared/general.dart';
 import 'package:Expense/UI/shared/roles.dart';
 import 'package:Expense/UI/views/Authentication/sign_in_page.dart';
 import 'package:Expense/UI/views/CashAdvanced/cash_advance.dart';
+import 'package:Expense/UI/views/CashAdvanced/cash_advance_ermc.dart';
 import 'package:Expense/UI/views/CashAdvanced/cash_advance_hod.dart';
+import 'package:Expense/UI/views/CashAdvanced/cash_advance_md.dart';
 import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition.dart';
 import 'package:Expense/UI/views/ContactSupport/contact_support.dart';
 import 'package:Expense/UI/views/Notification/notification.dart';
@@ -704,7 +706,8 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
+                        builder: (BuildContext context) =>
+                            CashAdvanceErmcScreen()));
                   },
                 ),
                 ListTile(
@@ -751,9 +754,12 @@ class _HomePageState extends State<HomePage> {
                       title: Text('Cash Advance Approval'),
                       onTap: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                PettyCashScreen()));
+                                CashAdvanceErmcScreen(),
+                          ),
+                        );
                       },
                     ),
                     ListTile(
@@ -813,8 +819,12 @@ class _HomePageState extends State<HomePage> {
                   title: Text('Cash Advance Approval'),
                   onTap: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            CashAdvanceMdScreen(),
+                      ),
+                    );
                   },
                 ),
                 ListTile(
