@@ -10,6 +10,9 @@ import 'package:Expense/UI/views/CashAdvanced/cash_advance_ermc.dart';
 import 'package:Expense/UI/views/CashAdvanced/cash_advance_hod.dart';
 import 'package:Expense/UI/views/CashAdvanced/cash_advance_md.dart';
 import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition.dart';
+import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition_ermc.dart';
+import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition_hod.dart';
+import 'package:Expense/UI/views/ChequeRequisition/cheque_requisition_md.dart';
 import 'package:Expense/UI/views/ContactSupport/contact_support.dart';
 import 'package:Expense/UI/views/Notification/notification.dart';
 import 'package:Expense/UI/views/PettyCash/petty_cash.dart';
@@ -406,13 +409,15 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => CashAdvanceScreen(),
                         ),
                       );
-                    } else {
+                    } else if (title == "Cheque Requisition") {
                       Navigator.of(context).pop();
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ChequeRequisitionScreen(),
                         ),
                       );
+                    } else {
+                      print("nothing");
                     }
                   },
                   child: Text(
@@ -658,8 +663,11 @@ class _HomePageState extends State<HomePage> {
             title: Text('Cheque Requisition Request'),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => PettyCashScreen()));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => ChequeRequisitionScreen(),
+                ),
+              );
             },
           ),
           ListTile(
@@ -667,8 +675,12 @@ class _HomePageState extends State<HomePage> {
             title: Text('HOD Approval'),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => PettyCashScreen()));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      ChequeRequisitionHodScreen(),
+                ),
+              );
             },
           ),
         ],
@@ -715,8 +727,12 @@ class _HomePageState extends State<HomePage> {
                   title: Text('Cheque Requisition Approval'),
                   onTap: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ChequeRequisitionErmcScreen(),
+                      ),
+                    );
                   },
                 ),
               ],
@@ -767,9 +783,12 @@ class _HomePageState extends State<HomePage> {
                       title: Text('Cheque Requisition Approval'),
                       onTap: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                PettyCashScreen()));
+                                ChequeRequisitionErmcScreen(),
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -832,342 +851,17 @@ class _HomePageState extends State<HomePage> {
                   title: Text('Cheque Requisition Approval'),
                   onTap: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ChequeRequisitionMdScreen(),
+                      ),
+                    );
                   },
                 ),
               ],
             )
           : Row(),
-      // Reports
-      userRole == superAdmin
-          ? ExpansionTile(
-              title: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 22.0),
-                    child: Icon(
-                      Icons.show_chart,
-                      color: Theme.of(context).textSelectionColor,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text('Reports'),
-                  ),
-                ],
-              ),
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.pie_chart),
-                  title: Text('Petty Cash'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.pie_chart),
-                  title: Text('Cash Advance'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.pie_chart),
-                  title: Text('Cheque Requisition'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-              ],
-            )
-          : userRole == admin
-              ? ExpansionTile(
-                  title: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 42.0),
-                        child: Text(' '),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text('Reports'),
-                      ),
-                    ],
-                  ),
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.pie_chart),
-                      title: Text('Petty Cash'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.pie_chart),
-                      title: Text('Cash Advance'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.pie_chart),
-                      title: Text('Cheque Requisition'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                  ],
-                )
-              : userRole == hod
-                  ? ExpansionTile(
-                      title: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 42.0),
-                            child: Text(' '),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text('Reports'),
-                          ),
-                        ],
-                      ),
-                      children: <Widget>[
-                        ListTile(
-                          leading: Icon(Icons.pie_chart),
-                          title: Text('Petty Cash'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    PettyCashScreen()));
-                          },
-                        ),
-                        ListTile(
-                          leading: Icon(Icons.pie_chart),
-                          title: Text('Cash Advance'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    PettyCashScreen()));
-                          },
-                        ),
-                        ListTile(
-                          leading: Icon(Icons.pie_chart),
-                          title: Text('Cheque Requisition'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    PettyCashScreen()));
-                          },
-                        ),
-                      ],
-                    )
-                  : userRole == manager
-                      ? ExpansionTile(
-                          title: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 42.0),
-                                child: Text(' '),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text('Reports'),
-                              ),
-                            ],
-                          ),
-                          children: <Widget>[
-                            ListTile(
-                              leading: Icon(Icons.pie_chart),
-                              title: Text('Petty Cash'),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        PettyCashScreen()));
-                              },
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.pie_chart),
-                              title: Text('Cash Advance'),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        PettyCashScreen()));
-                              },
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.pie_chart),
-                              title: Text('Cheque Requisition'),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        PettyCashScreen()));
-                              },
-                            ),
-                          ],
-                        )
-                      : Row(),
-      // Settings
-      userRole == superAdmin
-          ? ExpansionTile(
-              title: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 22.0),
-                    child: Icon(
-                      Icons.settings,
-                      color: Theme.of(context).textSelectionColor,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text('Settings'),
-                  ),
-                ],
-              ),
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.security),
-                  title: Text('Roles & Permission'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.people),
-                  title: Text('User Management'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.shuffle),
-                  title: Text('Expense Types'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.shuffle),
-                  title: Text('Retirement Types'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.store_mall_directory),
-                  title: Text('Departments'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => PettyCashScreen()));
-                  },
-                ),
-              ],
-            )
-          : userRole == admin
-              ? ExpansionTile(
-                  title: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 22.0),
-                        child: Icon(
-                          Icons.settings,
-                          color: Theme.of(context).textSelectionColor,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text('Settings'),
-                      ),
-                    ],
-                  ),
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.security),
-                      title: Text('Roles & Permission'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.people),
-                      title: Text('User Management'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.shuffle),
-                      title: Text('Expense Types'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.shuffle),
-                      title: Text('Retirement Types'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.store_mall_directory),
-                      title: Text('Departments'),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PettyCashScreen()));
-                      },
-                    ),
-                  ],
-                )
-              : Row(),
       Divider(),
       ListTile(
         leading: Icon(Icons.refresh),
@@ -1483,7 +1177,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             _showModalBottomSheet(
                                 context,
-                                "Petty Cash",
+                                "Cheque Requisition",
                                 requestedChequeRequisition,
                                 approvedChequeRequisition,
                                 paidChequeRequisition,
